@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>QRコード読み取りスタート</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="main">
+        <h1>QRコード読み取りアプリ</h1> <!-- タイトルを追加 -->
+        
+        <p id="name">名前: <span id="user_name">未設定</span></p> <!-- 名前表示エリア -->
+
+        <button id="startBtn">QRコード読み取りを開始</button> <!-- ボタン追加 -->
+
+        <script>
+            document.getElementById('startBtn').addEventListener('click', function() {
+                // エンドポイントの指定が原因かもしれないので明示的に記述
+                $.ajax({
+                    url: "/start_main",  // 相対URLを使用（/start_main）
+                    type: 'GET',
+                    success: function(response) {
+                        console.log("Flask app started:", response);
+                        alert("QRコード読み取りを開始します！");
+                        window.location.href = '/';  // メイン画面へ遷移
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error:", error);
+                        alert("エラーが発生しました。");
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
